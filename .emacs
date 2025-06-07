@@ -10,7 +10,8 @@
 (defun rc/get-default-font ()
   (cond
    ((eq system-type 'windows-nt) "Consolas-13")
-   ((eq system-type 'gnu/linux) "Fira Code-22")))
+   ;;((eq system-type 'gnu/linux) "Fira Code-23")))
+   ((eq system-type 'gnu/linux) "Iosevka-21")))
 
 ;;; display-line-numbers-mode
 (when (version<= "26.0.50" emacs-version)
@@ -40,6 +41,7 @@
 (show-paren-mode 1)
 
 ;; theme
+
 (use-package gruber-darker-theme
   :ensure t      ;; install it if not present
   :config
@@ -50,17 +52,17 @@
 ;;(rc/require-theme 'gruber-darker)
 
 ;; Tree sitter for better syntax highlight
-(use-package treesit
-  :if (treesit-available-p)
-  :ensure nil
-  :init
-  (setq treesit-language-source-alist
-    '((bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
-      (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
-      ;(heex "https://github.com/phoenixframework/tree-sitter-heex")
-      ;(elixir     . ("https://github.com/elixir-lang/tree-sitter-elixir" "main" "src" nil nil))
-      )
-  ))
+;(use-package treesit
+; :ensure nil
+; :init
+; (setq treesit-language-source-alist
+;   '((bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
+;     (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
+;     (heex "https://github.com/phoenixframework/tree-sitter-heex")
+;     (elixir     . ("https://github.com/elixir-lang/tree-sitter-elixir" "main" "src" nil nil))
+;     )
+; ))
+
 
 ;; Elixir
 ;(use-package elixir-mode :ensure t)
@@ -110,11 +112,18 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;;; Elixir section
+;(use-package elixir-ts-mode
+;  :straight (:type built-in)
+;  :mode (("\\.ex\\'" . elixir-ts-mode)
+;         ("\\.exs\\'" . elixir-ts-mode)
+;         ("\\mix.lock\\'" . elixir-ts-mode)))
+
 ;(use-package elixir-ts-mode
 ;  :straight (:type built-in)
 ; :init
 ; (setq elixir-ts-indent-offset nil) ; disable indentation
-; :mode (("\\.ex\\'" . elixir-ts-mode)
+; mode (("\\.ex\\'" . elixir-ts-mode)
 ;        ("\\.exs\\'" . elixir-ts-mode)
 ;        ("\\mix.lock\\'" . elixir-ts-mode))
 ; :hook
@@ -220,6 +229,71 @@
 
 ;; Do not blink cursor
 (blink-cursor-mode -1)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Built-in config for developers
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'treesit)
+
+(setq treesit-font-lock-level 6)
+
+(setq major-mode-remap-alist
+      '((bash-mode . bash-ts-mode)
+        (css-mode . css-ts-mode)
+        (elisp-mode . elisp-ts-mode)
+        (elixir-mode . elixir-ts-mode)
+        (go-mode . go-ts-mode)
+        (hcl-mode . hcl-ts-mode)
+        (heex-mode . heex-ts-mode)
+        (html-mode . html-ts-mode)
+        (js2-mode . js-ts-mode)
+        (json-mode . json-ts-mode)
+        (makefile-mode . make-ts-mode)
+        (python-mode . python-ts-mode)
+        (toml-mode . toml-ts-mode)
+        (typescript-mode . typescript-ts-mode)
+        (rust-mode . rust-ts-mode)
+        (yaml-mode . yaml-ts-mode)))
+
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (cmake "https://github.com/uyha/tree-sitter-cmake")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
+        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+        (elixir "https://github.com/elixir-lang/tree-sitter-elixir.git")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+        (hcl "https://github.com/MichaHoffmann/tree-sitter-hcl")
+        (heex "https://github.com/phoenixframework/tree-sitter-heex.git")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (liquid "https://github.com/Shopify/tree-sitter-liquid")
+        (make "https://github.com/alemuller/tree-sitter-make")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (rust "https://github.com/tree-sitter/tree-sitter-rust")
+        (toml "https://github.com/tree-sitter/tree-sitter-toml")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+
+;;; Elixir lang
+(use-package elixir-ts-mode
+  :straight (:host github :repo "wkirschbaum/elixir-ts-mode")
+  :mode (("\\.ex\\'" . elixir-ts-mode)
+         ("\\.exs\\'" . elixir-ts-mode)
+         ("\\mix.lock\\'" . elixir-ts-mode)))
+
+(use-package heex-ts-mode
+  :straight (:host github :repo "wkirschbaum/heex-ts-mode")
+  :mode "\\.heex\\'")
 
 ;; load custom file from ~/emacs.custom.el
 (load-file custom-file)
