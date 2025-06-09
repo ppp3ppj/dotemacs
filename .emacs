@@ -258,7 +258,8 @@
         (toml-mode . toml-ts-mode)
         (typescript-mode . typescript-ts-mode)
         (rust-mode . rust-ts-mode)
-        (yaml-mode . yaml-ts-mode)))
+        (yaml-mode . yaml-ts-mode)
+	(erlang-mode . erlang-ts-mode)))
 
 (setq treesit-language-source-alist
       '((bash "https://github.com/tree-sitter/tree-sitter-bash")
@@ -281,7 +282,8 @@
         (toml "https://github.com/tree-sitter/tree-sitter-toml")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-        (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+	(erlang "https://github.com/WhatsApp/tree-sitter-erlang")))
 
 
 ;;; Elixir lang
@@ -291,9 +293,16 @@
          ("\\.exs\\'" . elixir-ts-mode)
          ("\\mix.lock\\'" . elixir-ts-mode)))
 
+
 (use-package heex-ts-mode
   :straight (:host github :repo "wkirschbaum/heex-ts-mode")
   :mode "\\.heex\\'")
+
+;;; Erlang
+(use-package erlang-ts
+ :ensure t
+ :defer t
+ :mode ("\\.erl\\'" . erlang-ts-mode))
 
 ;;; Magit
 ;; magit requres this lib, but it is not installed automatically on
@@ -305,6 +314,43 @@
 
 (global-set-key (kbd "C-c m s") 'magit-status)
 (global-set-key (kbd "C-c m l") 'magit-log)
+
+(use-package hl-todo
+  :straight t
+  :custom
+  (hl-todo-keyword-faces
+   '(("HOLD" . "#d0bf8f") ("TODO" . "#7209b7") ("NEXT" . "#dca3a3")
+     ("THEM" . "#dc8cc3") ("PROG" . "#7cb8bb") ("OKAY" . "#7cb8bb")
+     ("DONT" . "#5f7f5f") ("FAIL" . "#8c5353") ("DONE" . "#afd8af")
+     ("NOTE" . "#d0bf8f") ("MAYBE" . "#d0bf8f") ("KLUDGE" . "#d0bf8f")
+     ("HACK" . "#d0bf8f") ("TEMP" . "#d0bf8f") ("FIXME" . "#cc9393")
+     ("XXXX*" . "#cc9393")
+     
+     ("CRITICAL" . "#ff0000") ("IN-PROGRESS" . "#4361ee") ("BLOCKED" . "#4f000b")
+     ("WONT-DO" . "#dee2e6")))
+  :config
+  (global-hl-todo-mode))
+
+;; Native editing supports
+;; suggest to use /smartparens/ or /paredit/ (enabled in =init-basics.el=)
+;; + ~forward-sexp~, =C-M-f=:
+;;     move forward over a balanced expression that can be a pair or a symbol
+;; + ~backward-sexp~, =C-M-b=:
+;;   move backward
+;; + ~kill-sexp~, =C-M-k=:
+;;   kill balaced expression forward that can be a pair or a symbol
+;; + ~mark-sexp~, =C-M-<SPC>= or =C-M-@=:
+;;   put mark after following expression that can be a pair or a symbol
+;; + ~beginning-of-defun~, =C-M-a=:
+;;   move point to beginning of a function
+;; + ~end-of-defun~, =C-M-e=:
+;;   move point to end of a function
+;; + ~mark-defun~, =C-M-h=:
+;;   put a region around whole current or following function
+
+;; Tips
+;; M-% → replace inside region (with M-x query-replace)
+
 
 ;; load custom file from ~/emacs.custom.el
 (load-file custom-file)
