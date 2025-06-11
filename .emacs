@@ -258,6 +258,7 @@
         (toml-mode . toml-ts-mode)
         (typescript-mode . typescript-ts-mode)
         (rust-mode . rust-ts-mode)
+	(lua-mode . lua-ts-mode)
         (yaml-mode . yaml-ts-mode)
 	(ocaml-mode . ocaml-ts-mode)
 	(erlang-mode . erlang-ts-mode)))
@@ -284,6 +285,14 @@
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+	;; emacs
+	(elisp "https://github.com/Wilfred/tree-sitter-elisp" "main" "src")
+	(lua  "https://github.com/tree-sitter-grammars/tree-sitter-lua" "main" "src")
+	;; DOC
+	(luadoc "https://github.com/tree-sitter-grammars/tree-sitter-luadoc" "master" "src")
+	;; PATTERN
+	(luap "https://github.com/tree-sitter-grammars/tree-sitter-luap" "master" "src")
+
 	(ocaml "https://github.com/tree-sitter/tree-sitter-ocaml" "master" "grammars/ocaml/src/")
         (ocaml-interface "https://github.com/tree-sitter/tree-sitter-ocaml" "master" "grammars/interface/src/")
 	(erlang "https://github.com/WhatsApp/tree-sitter-erlang")))
@@ -312,6 +321,13 @@
    :ensure t
  :defer t
   :mode (("\\.ml\\'" . ocaml-ts-mode)))
+
+;;; Lua
+(use-package lua-ts-mode
+   :ensure t
+ :defer t
+ :mode (("\\.lua\\'" . lua-ts-mode)))
+
 
 ;;; Magit
 ;; magit requres this lib, but it is not installed automatically on
