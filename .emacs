@@ -244,59 +244,87 @@
 
 (setq major-mode-remap-alist
       '((bash-mode . bash-ts-mode)
-        (css-mode . css-ts-mode)
         (elisp-mode . elisp-ts-mode)
         (elixir-mode . elixir-ts-mode)
-        (go-mode . go-ts-mode)
         (hcl-mode . hcl-ts-mode)
         (heex-mode . heex-ts-mode)
-        (html-mode . html-ts-mode)
-        (js2-mode . js-ts-mode)
         (json-mode . json-ts-mode)
         (makefile-mode . make-ts-mode)
-        (python-mode . python-ts-mode)
+        ;;(python-mode . python-ts-mode)
         (toml-mode . toml-ts-mode)
-        (typescript-mode . typescript-ts-mode)
         (rust-mode . rust-ts-mode)
 	(lua-mode . lua-ts-mode)
+	;; EMACS
+	(emacs-lisp-mode . emacs-lisp-ts-mode)
+	;; SHELL
+	;(sh-mode . bash-ts-mode)
+	;(bash-mode . bash-ts-mode)
+	;; WEB
+	(js2-mode . js-ts-mode)
+        (javascript-mode . js-ts-mode)
+        (typescript-mode . typescript-ts-mode)
+        (tsx-mode . tsx-ts-mode)
+        (html-mode . html-ts-mode)
+        (css-mode . css-ts-mode)
+	;; BIN
+	(c-mode . c-ts-mode)
+	(zig-mode . zig-ts-mode)
+	(go-mode . go-ts-mode)
+	;; CONFIG
+	(dockerfile-mode . dockerfile-ts-mode)
+	;; DATA
         (yaml-mode . yaml-ts-mode)
+	;; Functional
 	(ocaml-mode . ocaml-ts-mode)
 	(erlang-mode . erlang-ts-mode)))
 
 (setq treesit-language-source-alist
       '((bash "https://github.com/tree-sitter/tree-sitter-bash")
         (cmake "https://github.com/uyha/tree-sitter-cmake")
-        (css "https://github.com/tree-sitter/tree-sitter-css")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
         (elisp "https://github.com/Wilfred/tree-sitter-elisp")
         (elixir "https://github.com/elixir-lang/tree-sitter-elixir.git")
-        (go "https://github.com/tree-sitter/tree-sitter-go")
-        (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
         (hcl "https://github.com/MichaHoffmann/tree-sitter-hcl")
         (heex "https://github.com/phoenixframework/tree-sitter-heex.git")
-        (html "https://github.com/tree-sitter/tree-sitter-html")
-        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
         (json "https://github.com/tree-sitter/tree-sitter-json")
         (liquid "https://github.com/Shopify/tree-sitter-liquid")
         (make "https://github.com/alemuller/tree-sitter-make")
-        (python "https://github.com/tree-sitter/tree-sitter-python")
+        ;;(python "https://github.com/tree-sitter/tree-sitter-python")
         (rust "https://github.com/tree-sitter/tree-sitter-rust")
         (toml "https://github.com/tree-sitter/tree-sitter-toml")
-        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-	;; emacs
+	;; EMACS
 	(elisp "https://github.com/Wilfred/tree-sitter-elisp" "main" "src")
 	(lua  "https://github.com/tree-sitter-grammars/tree-sitter-lua" "main" "src")
+	;; WEB
+	(javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "master" "src"))
+        (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
+        (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
+        (html . ("https://github.com/tree-sitter/tree-sitter-html" "master" "src"))
+        (css . ("https://github.com/tree-sitter/tree-sitter-css" "master" "src"))
 	;; DOC
 	(luadoc "https://github.com/tree-sitter-grammars/tree-sitter-luadoc" "master" "src")
 	;; PATTERN
 	(luap "https://github.com/tree-sitter-grammars/tree-sitter-luap" "master" "src")
-
+	;; BIN
+	(c . ("https://github.com/tree-sitter/tree-sitter-c" "master" "src"))
+	(zig . ("https://github.com/maxxnino/tree-sitter-zig" "main" "src"))
+	(go "https://github.com/tree-sitter/tree-sitter-go")
+	(gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+	;; DATA
+	(json . ("https://github.com/tree-sitter/tree-sitter-json" "master" "src"))
+	;; CONFIG
+	(dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile" "main" "src"))
+	;; Functional
 	(ocaml "https://github.com/tree-sitter/tree-sitter-ocaml" "master" "grammars/ocaml/src/")
         (ocaml-interface "https://github.com/tree-sitter/tree-sitter-ocaml" "master" "grammars/interface/src/")
 	(erlang "https://github.com/WhatsApp/tree-sitter-erlang")))
 
+;; for install all treesitter
+(defun tree-sitter-setup ()
+  (interactive)
+  (dolist (source treesit-language-source-alist)
+    (treesit-install-language-grammar (car source))))
 
 ;;; Elixir lang
 (use-package elixir-ts-mode
