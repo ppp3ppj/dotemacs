@@ -9,9 +9,9 @@
 ;;; Appearance
 (defun rc/get-default-font ()
   (cond
-   ((eq system-type 'windows-nt) "Consolas-13")
+   ((eq system-type 'windows-nt) "Iosevka-20")
    ;;((eq system-type 'gnu/linux) "Fira Code-23")))
-   ((eq system-type 'gnu/linux) "Iosevka-21")))
+   ((eq system-type 'gnu/linux) "Iosevka-20")))
 
 ;;; display-line-numbers-mode
 (when (version<= "26.0.50" emacs-version)
@@ -378,7 +378,7 @@
      ("NOTE" . "#d0bf8f") ("MAYBE" . "#d0bf8f") ("KLUDGE" . "#d0bf8f")
      ("HACK" . "#d0bf8f") ("TEMP" . "#d0bf8f") ("FIXME" . "#cc9393")
      ("XXXX*" . "#cc9393")
-     
+
      ("CRITICAL" . "#ff0000") ("IN-PROGRESS" . "#4361ee") ("BLOCKED" . "#4f000b")
      ("WONT-DO" . "#dee2e6")))
   :config
@@ -403,6 +403,26 @@
 
 ;; Tips
 ;; M-% → replace inside region (with M-x query-replace)
+
+;; Jump to definition, used as a fallback of lsp-find-definition
+(use-package dumb-jump
+  :ensure t
+  :bind (("M-g j" . dumb-jump-go)
+         ("M-g J" . dumb-jump-go-other-window))
+  :custom
+  (dumb-jump-quiet t)
+  (dumb-jump-aggressive t)
+  (dumb-jump-selector 'completing-read))
+
+
+;; Browse devdocs.io
+;; How to install use M-x devdocs-install
+;; Ex. M-x devdocs-install elixir
+(use-package devdocs
+  :ensure t
+  :bind ("C-c b" . devdocs-lookup)
+  :config
+  (add-to-list 'completion-category-overrides '(devdocs (styles . (flex)))))
 
 
 ;; load custom file from ~/emacs.custom.el
