@@ -5,6 +5,7 @@
 (load "~/.emacs.rc/rc.el")
 
 (load "~/.emacs.rc/misc-rc.el")
+(load "~/.emacs.rc/org-mode-rc.el")
 
 ;;; Appearance
 (defun rc/get-default-font ()
