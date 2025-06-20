@@ -11,7 +11,6 @@
 (defun rc/get-default-font ()
   (cond
    ((eq system-type 'windows-nt) "Iosevka-20")
-   ;;((eq system-type 'gnu/linux) "Fira Code-23")))
    ((eq system-type 'gnu/linux) "Iosevka-20")))
 
 ;;; display-line-numbers-mode
@@ -35,8 +34,8 @@
 
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
 
-;;(tool-bar-mode 0)
-;;(menu-bar-mode 0)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
 (scroll-bar-mode 0)
 (column-number-mode 1)
 (show-paren-mode 1)
