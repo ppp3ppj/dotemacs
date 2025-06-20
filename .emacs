@@ -482,6 +482,7 @@
   (eglot-send-changes-idle-time 0.1)
   (eglot-extend-to-xref t)
 
+
   :config
   (fset #'jsonrpc--log-event #'ignore)
 
@@ -510,11 +511,79 @@
                '((elixir-ts-mode heex-ts-mode elixir-mode)
                  . ("nextls" "--stdio=true")))
 
+
+
   ;; Auto-enable eglot for Elixir
   (add-hook 'elixir-mode-hook #'eglot-ensure)
   (add-hook 'elixir-ts-mode-hook #'eglot-ensure)
   (add-hook 'heex-ts-mode-hook #'eglot-ensure)
   )
+
+
+(defalias 'gf3/eglot
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "a") #'eglot-code-actions)
+    (define-key map (kbd "f") #'eglot-format)
+    (define-key map (kbd "r") #'eglot-rename)
+    map)
+  "Eglot commands.")
+
+;; how to use
+; C-c c a run code actions
+; C-c c f format
+; C-c c r rename
+(global-set-key (kbd "C-c c") 'gf3/eglot)
+
+;; Buffer Mngt
+(defun switch-to-last-buffer ()
+  "Switch to the previously open buffer."
+  (interactive)
+  (switch-to-buffer nil))
+
+(defun new-buffer ()
+  "Create a new empty buffer."
+  (interactive)
+  (let ((buffer (generate-new-buffer "Untitled")))
+	  (set-buffer-major-mode buffer)
+	  (switch-to-buffer buffer)))
+
+(defun gf3/buffer ()
+  "Find buffers, maybe scoped to a project."
+  (interactive)
+  (if (project-current)
+      (consult-project-buffer)
+	  (consult-buffer)))
+
+(defun gf3/kill-buffer-filename (&optional prefix)
+  "Kill the current buffer's filename to the kill ring. If PREFIX is set the filename is killed to the system clipboard."
+  (interactive "p")
+  (let ((filename
+         (if (project-current)
+             (file-relative-name buffer-file-name (project-root (project-current)))
+           buffer-file-name)))
+    (if (eq 4 prefix)
+        (gui-set-selection 'CLIPBOARD filename)
+      (kill-new filename))
+    (message (format "%s %s" (if (eq 4 prefix) "Copied" "Killed") filename))))
+
+
+(defalias 'gf3/buffers
+  (let ((map (make-sparse-keymap)))
+	  (define-key map (kbd "a") '("Last buffer" . switch-to-last-buffer))
+	  (define-key map (kbd "b") '("Buffers". gf3/buffer))
+	  (define-key map (kbd "i") '("Symbols" . consult-imenu))
+	  (define-key map (kbd "f") '("Files" . gf3/find))
+	  (define-key map (kbd "F") '("Browse files" . find-file))
+	  (define-key map (kbd "g") '("Grep" . deadgrep))
+	  (define-key map (kbd "k") '("Kill filename" . gf3/kill-buffer-filename))
+	  (define-key map (kbd "q") '("Close buffer" . kill-current-buffer))
+	  (define-key map (kbd "l") '("Lines" . consult-line))
+	  (define-key map (kbd "n") '("New buffer" . new-buffer))
+	  (define-key map (kbd "r") '("Recent file" . consult-recent-file))
+	  map)
+  "Buffer management.")
+
+(global-set-key (kbd "C-c b") '("Buffer management". gf3/buffers))
 
 ;; load custom file from ~/emacs.custom.el
 (load-file custom-file)
