@@ -471,12 +471,15 @@
 (add-hook 'nim-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'yaml-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'porth-mode-hook 'rc/set-up-whitespace-handling)
+;; Elixir hook
+(add-hook 'elixir-ts-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'heex-ts-mode-hook 'rc/set-up-whitespace-handling)
 
 ;; Eglot
 (use-package eglot
-    ;; no :ensure t here because it's built-in
+  ;; no :ensure t here because it's built-in
 
-    :custom
+  :custom
   (eglot-send-changes-idle-time 0.1)
   (eglot-extend-to-xref t)
 
