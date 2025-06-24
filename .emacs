@@ -605,6 +605,35 @@
 (global-set-key (kbd "C-x 4 t") 'transpose-buffers)
 
 
+;; Start eshell or switch to it if it's active.
+(global-set-key (kbd "C-x m") 'eshell)
+
+;; Start a new eshell even if one is active.
+(global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
+
+;; Start a regular shell if you prefer that.
+(global-set-key (kbd "C-x C-m") 'shell)
+
+
+;; ==== M-n, M-p ====
+(defun scroll-down-keep-cursor ()
+  ;; Scroll the text one line down while keeping the cursor
+  (interactive)
+  (scroll-down 1))
+
+(defun scroll-up-keep-cursor ()
+  ;; Scroll the text one line up while keeping the cursor
+  (interactive)
+  (scroll-up 1))
+
+(global-set-key (kbd "M-N") 'scroll-down-keep-cursor)
+(global-set-key (kbd "M-P") 'scroll-up-keep-cursor)
+
+
+;; Font size
+(define-key global-map (kbd "C-+") 'text-scale-increase)
+(define-key global-map (kbd "C--") 'text-scale-decrease)
+
 
 ;; load custom file from ~/emacs.custom.el
 (load-file custom-file)
