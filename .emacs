@@ -336,7 +336,6 @@
   ((elixir-ts-mode . eglot-ensure))
   )
 
-
 (use-package heex-ts-mode
   :straight (:host github :repo "wkirschbaum/heex-ts-mode")
   :mode "\\.heex\\'")
@@ -359,6 +358,11 @@
  :defer t
  :mode (("\\.lua\\'" . lua-ts-mode)))
 
+;;; Rust
+(use-package rust-ts-mode
+  :ensure t
+ :defer t
+ :mode (("\\.rs\\'" . rust-ts-mode)))
 
 ;;; Magit
 ;; magit requres this lib, but it is not installed automatically on
@@ -633,7 +637,6 @@
 ;; Font size
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
-
 
 ;; load custom file from ~/emacs.custom.el
 (load-file custom-file)
