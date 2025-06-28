@@ -462,7 +462,7 @@
 (add-hook 'emacs-lisp-mode 'rc/set-up-whitespace-handling)
 (add-hook 'java-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'lua-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'rust-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'rust-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'scala-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'markdown-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'haskell-mode-hook 'rc/set-up-whitespace-handling)
@@ -477,6 +477,8 @@
 ;; Elixir hook
 (add-hook 'elixir-ts-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'heex-ts-mode-hook 'rc/set-up-whitespace-handling)
+;; Rust hook
+(add-hook 'rust-ts-mode-hook 'rc/set-up-whitespace-handling)
 
 ;; Eglot
 (use-package eglot
