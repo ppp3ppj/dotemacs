@@ -136,6 +136,23 @@
 
 ; )
 
+;; GO
+(use-package go-ts-mode
+  :mode "\\.go\\'"
+  :bind
+  (:map go-ts-mode-map
+    ("C-c i a" . treesit-beginning-of-defun)
+    ("C-c i e" . treesit-end-of-defun)
+    ("C-c i t" . go-ts-mode-test-function-at-point)
+    ("C-c i f" . go-ts-mode-test-this-file)
+    ("C-c i p" . go-ts-mode-test-this-package)
+    ("RET"     . reindent-then-newline-and-indent)
+    ("M-RET"   . newline)
+   )
+  :custom
+  (go-ts-mode-indent-offset 4)
+)
+
 
 ;;; multiple cursors
 (rc/require 'multiple-cursors)
