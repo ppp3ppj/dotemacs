@@ -247,6 +247,10 @@
 ;; Do not blink cursor
 (blink-cursor-mode -1)
 
+;; undo-tree
+;; enable undo-tree first
+(rc/require 'undo-tree)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
