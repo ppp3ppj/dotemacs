@@ -273,7 +273,7 @@
         (makefile-mode . make-ts-mode)
         ;;(python-mode . python-ts-mode)
         (toml-mode . toml-ts-mode)
-        (rust-mode . rust-ts-mode)
+        ;;(rust-mode . rust-ts-mode)
 	(lua-mode . lua-ts-mode)
 	;; EMACS
 	(emacs-lisp-mode . emacs-lisp-ts-mode)
@@ -311,7 +311,7 @@
         (liquid "https://github.com/Shopify/tree-sitter-liquid")
         (make "https://github.com/alemuller/tree-sitter-make")
         ;;(python "https://github.com/tree-sitter/tree-sitter-python")
-        (rust "https://github.com/tree-sitter/tree-sitter-rust")
+        ;;(rust "https://github.com/tree-sitter/tree-sitter-rust")
         (toml "https://github.com/tree-sitter/tree-sitter-toml")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
 	;; EMACS
@@ -380,10 +380,10 @@
  :mode (("\\.lua\\'" . lua-ts-mode)))
 
 ;;; Rust
-(use-package rust-ts-mode
-  :ensure t
- :defer t
- :mode (("\\.rs\\'" . rust-ts-mode)))
+;;(use-package rust-ts-mode
+;;  :ensure t
+;; :defer t
+;; :mode (("\\.rs\\'" . rust-ts-mode)))
 
 ;;; Magit
 ;; magit requres this lib, but it is not installed automatically on
@@ -453,7 +453,9 @@
   (add-to-list 'completion-category-overrides '(devdocs (styles . (flex)))))
 
 ;;; helm
-(rc/require 'helm 'helm-git-grep 'helm-ls-git)
+;;(rc/require 'helm 'helm-git-grep 'helm-ls-git)
+;; helm-git-grep error
+(rc/require 'helm 'helm-ls-git)
 
 (setq helm-ff-transformer-show-only-basename nil)
 
@@ -499,7 +501,9 @@
 (add-hook 'elixir-ts-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'heex-ts-mode-hook 'rc/set-up-whitespace-handling)
 ;; Rust hook
-(add-hook 'rust-ts-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'rust-ts-mode-hook 'rc/set-up-whitespace-handling)
+;;Rust mode hook
+(add-hook 'rust-mode-hook 'rc/set-up-whitespace-handling)
 
 ;; Eglot
 (use-package eglot
@@ -614,7 +618,7 @@
 
 ;; Global key binding
 ;; ==== Dvorak niceity ====
-(define-key key-translation-map "\C-t" "\C-x")
+;;(define-key key-translation-map "\C-t" "\C-x")
 
 ;; ==== transpose buffers ====
 (defun transpose-buffers (arg)
@@ -660,6 +664,14 @@
 ;; Font size
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
+
+
+;; treesitter
+;;; Packages that don't require configuration
+(rc/require
+  'rust-mode
+  'toml-mode
+  )
 
 ;; load custom file from ~/emacs.custom.el
 (load-file custom-file)
