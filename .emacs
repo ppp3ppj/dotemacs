@@ -353,8 +353,8 @@
   :mode (("\\.ex\\'" . elixir-ts-mode)
          ("\\.exs\\'" . elixir-ts-mode)
          ("\\mix.lock\\'" . elixir-ts-mode))
-  :hook
-  ((elixir-ts-mode . eglot-ensure))
+  :config
+  (setq elixir-ts-indent-offset 4)
   )
 
 (use-package heex-ts-mode
@@ -506,49 +506,49 @@
 (add-hook 'rust-mode-hook 'rc/set-up-whitespace-handling)
 
 ;; Eglot
-(use-package eglot
-  ;; no :ensure t here because it's built-in
-
-  :custom
-  (eglot-send-changes-idle-time 0.1)
-  (eglot-extend-to-xref t)
-
-
-  :config
-  (fset #'jsonrpc--log-event #'ignore)
-
-  ;; Add the path to where nextls is located
-  (add-to-list 'exec-path "~/dev/language_servers/elixir/next-ls/bin/")
-
-  ;; NextLS
-  ;; # Installation
-  ;; gh release download v0.19.2 \
-  ;; --pattern next_ls_linux_amd64 \
-  ;; --output ~/.local/bin/nextls \
-  ;; --clobber \
-  ;; --repo elixir-tools/next-ls
-  ;; chmod +x ~/.local/bin/nextls
-
-  ;;https://www.elixir-tools.dev/docs/next-ls/editors/#emacs-with-eglot
-
-  ;; (add-to-list 'eglot-server-programs
-  ;;              `((elixir-ts-mode heex-ts-mode elixir-mode) .
-  ;;                ("nextls" "--stdio=true" :initializationOptions (:experimental (:completions (:enable t)))))
-  ;;              )
-
-
-  ;; Tell eglot to use nextls for Elixir
-  (add-to-list 'eglot-server-programs
-               '((elixir-ts-mode heex-ts-mode elixir-mode)
-                 . ("nextls" "--stdio=true")))
-
-
-
-  ;; Auto-enable eglot for Elixir
-  (add-hook 'elixir-mode-hook #'eglot-ensure)
-  (add-hook 'elixir-ts-mode-hook #'eglot-ensure)
-  (add-hook 'heex-ts-mode-hook #'eglot-ensure)
-  )
+;(use-package eglot
+;  ;; no :ensure t here because it's built-in
+;
+;  :custom
+;  (eglot-send-changes-idle-time 0.1)
+;  (eglot-extend-to-xref t)
+;
+;
+;  :config
+;  (fset #'jsonrpc--log-event #'ignore)
+;
+;  ;; Add the path to where nextls is located
+;  (add-to-list 'exec-path "~/dev/language_servers/elixir/next-ls/bin/")
+;
+;  ;; NextLS
+;  ;; # Installation
+;  ;; gh release download v0.19.2 \
+;  ;; --pattern next_ls_linux_amd64 \
+;  ;; --output ~/.local/bin/nextls \
+;  ;; --clobber \
+;  ;; --repo elixir-tools/next-ls
+;  ;; chmod +x ~/.local/bin/nextls
+;
+;  ;;https://www.elixir-tools.dev/docs/next-ls/editors/#emacs-with-eglot
+;
+;  ;; (add-to-list 'eglot-server-programs
+;  ;;              `((elixir-ts-mode heex-ts-mode elixir-mode) .
+;  ;;                ("nextls" "--stdio=true" :initializationOptions (:experimental (:completions (:enable t)))))
+;  ;;              )
+;
+;
+;  ;; Tell eglot to use nextls for Elixir
+;  (add-to-list 'eglot-server-programs
+;               '((elixir-ts-mode heex-ts-mode elixir-mode)
+;                 . ("nextls" "--stdio=true")))
+;
+;
+;
+;  ;; Auto-enable eglot for Elixir
+;  (add-hook 'elixir-mode-hook #'eglot-ensure)
+;  (add-hook 'elixir-ts-mode-hook #'eglot-ensure)
+;  (add-hook 'heex-ts-mode-hook #'eglot-ensure)
+;  )
 
 
 (defalias 'gf3/eglot
