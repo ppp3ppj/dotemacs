@@ -28,7 +28,7 @@
 
 (defun rc/insert-timestamp ()
   (interactive)
-  (insert (format-time-string "(%Y%m%d-%H%M%S)")))
+  (insert (format-time-string "(%Y%m%d-%H%M%S)" nil t)))
 
 (global-set-key (kbd "C-x p d") 'rc/insert-timestamp)
 
