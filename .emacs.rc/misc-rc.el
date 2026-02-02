@@ -71,3 +71,4 @@ This command does the inverse of `fill-paragraph'."
                                ,rc/frame-transparency))
       (set-frame-parameter nil 'alpha '(100 100)))))
 
+(windmove-default-keybindings)
