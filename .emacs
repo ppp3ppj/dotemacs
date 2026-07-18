@@ -684,5 +684,10 @@
   'toml-mode
   )
 
+;; scheme guile
+(rc/require
+  'geiser-guile
+  )
+
 ;; load custom file from ~/emacs.custom.el
 (load-file custom-file)
