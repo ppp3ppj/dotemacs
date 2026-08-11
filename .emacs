@@ -689,5 +689,10 @@
   'geiser-guile
   )
 
+;; Ocaml - tuareg-mode
+(rc/require
+  'tuareg
+  )
+
 ;; load custom file from ~/emacs.custom.el
 (load-file custom-file)
